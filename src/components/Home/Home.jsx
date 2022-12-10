@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import MovieListing from "../MovieListing/MovieListing";
 import movieApi, { apiKey } from "../../common/apis/movieApi";
+import { useDispatch } from "react-redux";
+import { addMovies } from "../../features/movies/movieSlice";
 import "./Home.scss";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchMovies = async () => {
       const movieText = "Marvel";
@@ -12,7 +16,7 @@ const Home = () => {
         .catch((error) => {
           console.log(error);
         });
-      console.log(response.data);
+      dispatch(addMovies(response.data));
     };
     fetchMovies();
   }, []);
